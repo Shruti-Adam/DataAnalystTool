@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .create-card-feature {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        text-align: center;
+        height: 100%;
+        margin-bottom: 15px;
+    }
+    
+    @media (min-width: 768px) {
+        .create-card-feature {
+            padding: 20px;
+            margin-bottom: 0;
+        }
+    }
+    
+    .create-card-feature i {
+        font-size: 1.75rem;
+    }
+    
+    @media (min-width: 768px) {
+        .create-card-feature i {
+            font-size: 2rem;
+        }
+    }
+    
+    .feature-title {
+        font-size: 1rem;
+        margin-top: 8px;
+        margin-bottom: 5px;
+    }
+    
+    @media (min-width: 768px) {
+        .feature-title {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            margin-bottom: 8px;
+        }
+    }
+    
+    .feature-text {
+        font-size: 0.7rem;
+        color: #6c757d;
+    }
+    
+    @media (min-width: 768px) {
+        .feature-text {
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+        <div class="card">
+            <div class="card-body p-3 p-md-5">
+                <h3 class="text-center mb-3 mb-md-4">Create New Dashboard</h3>
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3 mb-md-4">
+                        <label class="form-label">Upload Dataset</label>
+                        <input type="file" name="dataset" class="form-control" accept=".csv,.xlsx,.xls" required>
+                        <small class="text-muted">Supported: CSV, Excel (XLSX, XLS)</small>
+                    </div>
+                    
+                    <div class="mb-3 mb-md-4">
+                        <label class="form-label">Dashboard Type</label>
+                        <select name="dashboard_type" class="form-select">
+                            <option value="sales">Sales Analytics</option>
+                            <option value="hr">HR Analytics</option>
+                            <option value="education">Education Analytics</option>
+                            <option value="custom">Custom Dashboard</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3 mb-md-4">
+                        <label class="form-label">Theme</label>
+                        <select name="theme" class="form-select">
+                            <option value="corporate">Corporate</option>
+                            <option value="executive">Executive</option>
+                            <option value="modern">Modern</option>
+                            <option value="dark">Dark Theme</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-chart-line me-2"></i>Generate Dashboard
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="row g-2 g-md-3 mt-3 mt-md-4">
+            <div class="col-6">
+                <div class="create-card-feature">
+                    <i class="fas fa-rocket text-primary"></i>
+                    <div class="feature-title">AI-Powered</div>
+                    <div class="feature-text">Auto KPI & trends</div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="create-card-feature">
+                    <i class="fas fa-chart-pie text-primary"></i>
+                    <div class="feature-title">Smart Charts</div>
+                    <div class="feature-text">Interactive visuals</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

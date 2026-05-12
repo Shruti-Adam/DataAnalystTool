@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: ai-analytics-platform
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn ai_analytics.wsgi:application"
