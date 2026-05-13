@@ -477,3 +477,66 @@ def send_email_async(subject, message, recipient_list,
 
     thread = threading.Thread(target=send)
     thread.start()
+
+
+    from django.views.decorators.http import require_POST
+from .models import ScheduledReport
+
+
+@login_required
+@require_POST
+def send_report_email(request, dashboard_id):
+
+    dashboard = Dashboard.objects.get(
+        id=dashboard_id,
+        user=request.user
+    )
+
+    recipients = request.POST.get('recipients')
+    subject = request.POST.get('subject')
+    message = request.POST.get('message')
+    frequency = request.POST.get('frequency')
+    schedule_time = request.POST.get('schedule_time')
+
+    recipient_list = [
+        email.strip()
+        for email in recipients.split(',')
+        if email.strip()
+    ]
+
+    if frequency == 'once':
+
+        send_email_async(
+            subject=subject,
+            message=message,
+            recipient_list=recipient_list,
+            dashboard_name=dashboard.name,
+            dashboard_id=dashboard.id
+        )
+
+        messages.success(
+            request,
+            'Email sent successfully!'
+        )
+
+    else:
+
+        ScheduledReport.objects.create(
+            dashboard=dashboard,
+            name=f"{dashboard.name} Schedule",
+            recipients=recipients,
+            format='pdf',
+            schedule_type=frequency,
+            schedule_time=schedule_time,
+            is_active=True
+        )
+
+        messages.success(
+            request,
+            'Scheduled email created successfully!'
+        )
+
+    return redirect(
+        'dashboard:view',
+        dashboard_id=dashboard.id
+    )

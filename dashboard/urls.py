@@ -5,7 +5,6 @@ app_name = 'dashboard'
 
 urlpatterns = [
 
-    # Dashboard management
     path('', views.index_view, name='index'),
 
     path('create/', views.create_view, name='create'),
@@ -26,5 +25,11 @@ urlpatterns = [
         'duplicate/<int:dashboard_id>/',
         views.duplicate_dashboard,
         name='duplicate'
+    ),
+
+    path(
+        'send-report/<int:dashboard_id>/',
+        views.send_report_email,
+        name='send_report_email'
     ),
 ]
