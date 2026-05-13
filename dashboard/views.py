@@ -7,6 +7,7 @@ from io import StringIO
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.decorators.http import require_POST
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -18,6 +19,7 @@ from .models import Dataset, Dashboard
 import shutil
 import uuid
 import threading
+
 
 # ============================================================
 # DETECT DATASET TYPE
